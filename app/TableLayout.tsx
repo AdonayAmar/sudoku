@@ -1,53 +1,37 @@
-import { Box, Flex, Table } from "@radix-ui/themes";
+"use client";
+import { Box, Table, Flex } from "@radix-ui/themes";
+import React, { useState } from "react";
 
 const TableLayout = () => {
-  function Cell() {
-    return (
-      <Table.ColumnHeaderCell className="border w-10 p-0"></Table.ColumnHeaderCell>
-    );
-  }
+  const [activeCell, setActiveCell] = useState("");
+  console.log(activeCell);
 
-  function Block() {
-    return (
-      <Box className="border-2 fit-content">
-        <Table.Row>
-          <Cell></Cell>
-          <Cell></Cell>
-          <Cell></Cell>
-        </Table.Row>
-        <Table.Row>
-          <Cell></Cell>
-          <Cell></Cell>
-          <Cell></Cell>
-        </Table.Row>
-        <Table.Row>
-          <Cell></Cell>
-          <Cell></Cell>
-          <Cell></Cell>
-        </Table.Row>
-      </Box>
-    );
-  }
+  const cellId = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
     <Box className="p-10">
       <Table.Root>
         <Table.Body>
-          <Flex>
-            <Block />
-            <Block />
-            <Block />
-          </Flex>
-          <Flex>
-            <Block />
-            <Block />
-            <Block />
-          </Flex>
-          <Flex>
-            <Block />
-            <Block />
-            <Block />
-          </Flex>
+          {cellId.map((row) => (
+            <>
+              <Flex>
+                <Table.Row>
+                  {cellId.map((col) => (
+                    <Table.Cell
+                      key={`${row}${col}`}
+                      className="border w-10 p-0"
+                      style={
+                        activeCell === `${row}${col}`
+                          ? { backgroundColor: "green" }
+                          : { backgroundColor: "white" }
+                      }
+                      onClick={() => setActiveCell(`${row}${col}`)}
+                    ></Table.Cell>
+                  ))}
+                </Table.Row>
+              </Flex>
+            </>
+          ))}
         </Table.Body>
       </Table.Root>
     </Box>
