@@ -110,6 +110,16 @@ const cellSearchIndex: [number, number, number][] = [
   [8, 8, 8],
 ];
 
+const unsolvedMatrix: (number | null)[] = matrix;
+for (let i = 0; i < 40; i++) {
+  const cell = Math.floor(Math.random() * (80 - 0 + 1) + 0);
+  if (matrix[cell] === null) {
+    i--;
+  } else {
+    unsolvedMatrix[cell] = null;
+  }
+}
+
 const SudokuGrid = () => {
   const [activeCell, setActiveCell] = useState<number>();
   console.log(activeCell);
@@ -119,7 +129,8 @@ const SudokuGrid = () => {
 
     if (
       (activeCell || activeCell === 0) &&
-      matrix[cellId] === matrix[activeCell]
+      unsolvedMatrix[cellId] !== null &&
+      unsolvedMatrix[cellId] === unsolvedMatrix[activeCell]
     )
       return { backgroundColor: "#F4C776" };
 
@@ -146,7 +157,7 @@ const SudokuGrid = () => {
                 style={setHighligh(cellId)}
                 onClick={() => setActiveCell(cellId)}
               >
-                {matrix[cellId]}
+                {unsolvedMatrix[cellId]}
               </Grid>
             ))}
           </Grid>
