@@ -1,39 +1,35 @@
+"use client";
 import { Button, Grid } from "@radix-ui/themes";
 import React from "react";
+import { unsolvedMatrix } from "./getBoard";
 
-const KeyPad = () => {
+interface Props {
+  activeCell: number | undefined;
+  board: (number | null)[];
+  setBoard: (board: (number | null)[]) => void;
+}
+
+const btnMap = [1, 2, 3, 4, 5, 6, 7, 8, 9, null];
+
+const KeyPad = ({ activeCell, board, setBoard }: Props) => {
+  const inputHandler = (id: number | null) => {
+    if ((activeCell || activeCell === 0) && unsolvedMatrix[activeCell] === null)
+      board[activeCell] = id;
+    setBoard([...board]);
+  };
+
   return (
-    <Grid columns="5" rows="2" gap="2">
-      <Button size="3" color="gray">
-        1
-      </Button>
-      <Button size="3" color="gray">
-        2
-      </Button>
-      <Button size="3" color="gray">
-        3
-      </Button>
-      <Button size="3" color="gray">
-        4
-      </Button>
-      <Button size="3" color="gray">
-        5
-      </Button>
-      <Button size="3" color="gray">
-        6
-      </Button>
-      <Button size="3" color="gray">
-        7
-      </Button>
-      <Button size="3" color="gray">
-        8
-      </Button>
-      <Button size="3" color="gray">
-        9
-      </Button>
-      <Button size="3" color="gray">
-        X
-      </Button>
+    <Grid columns="5" gap="2">
+      {btnMap.map((id) => (
+        <Button
+          key={id ? id : "X"}
+          size="3"
+          color="gray"
+          onClick={() => inputHandler(id)}
+        >
+          {id ? id : "X"}
+        </Button>
+      ))}
     </Grid>
   );
 };
