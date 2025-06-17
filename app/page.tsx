@@ -4,6 +4,7 @@ import SudokuGrid from "./SudokuGrid";
 import InputPad from "./InputPad";
 import { useState } from "react";
 import { unsolvedMatrix } from "./getMatrix";
+import WinnerDialog from "./WinnerDialog";
 
 export default function Home() {
   const [board, setBoard] = useState(unsolvedMatrix);
@@ -11,6 +12,7 @@ export default function Home() {
 
   return (
     <Grid className="place-items-center p-10">
+      <WinnerDialog />
       <Box className="alig">
         <SudokuGrid
           board={board}
