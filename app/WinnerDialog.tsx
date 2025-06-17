@@ -1,10 +1,13 @@
 import { Button, Flex, Text, Dialog } from "@radix-ui/themes";
-
 import React from "react";
 
-const WinnerDialog = () => {
+interface Props {
+  gameEnd: boolean;
+}
+
+const WinnerDialog = ({ gameEnd }: Props) => {
   return (
-    <Dialog.Root open={true}>
+    <Dialog.Root open={!gameEnd}>
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>WINNER</Dialog.Title>
         <Dialog.Description size="2" mb="4">
