@@ -1,7 +1,7 @@
 "use client";
 import { Button, Grid } from "@radix-ui/themes";
 import React from "react";
-import { unsolvedMatrix } from "./getBoard";
+import { unsolvedMatrix } from "./getMatrix";
 
 interface Props {
   activeCell: number | undefined;

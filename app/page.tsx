@@ -3,7 +3,7 @@ import { Box, Grid } from "@radix-ui/themes";
 import SudokuGrid from "./SudokuGrid";
 import InputPad from "./InputPad";
 import { useState } from "react";
-import { unsolvedMatrix } from "./getBoard";
+import { unsolvedMatrix } from "./getMatrix";
 
 export default function Home() {
   const [board, setBoard] = useState(unsolvedMatrix);

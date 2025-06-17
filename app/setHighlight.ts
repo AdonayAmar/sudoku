@@ -1,10 +1,27 @@
-import { cellSearchIndex, unsolvedMatrix } from "./getBoard";
+import { cellSearchIndex, colMatrix, rowMatrix } from "./getBoard";
+import { unsolvedMatrix } from "./getMatrix";
 
 export const setHighligh = (
   cellId: number,
   activeCell: number | undefined,
   board: (number | null)[]
 ) => {
+  const cellRow: number[] = rowMatrix[cellSearchIndex[cellId][0]];
+  const cellCol: number[] = colMatrix[cellSearchIndex[cellId][1]];
+
+  if (hasDuplicates(cellRow)) return { backgroundColor: "#e94616" };
+  if (hasDuplicates(cellCol)) return { backgroundColor: "#e94616" };
+
+  function hasDuplicates(arr: number[]) {
+    const seen = arr.filter((e) => e !== cellId);
+    for (const item of seen) {
+      if (board[cellId] === board[item] && board[cellId]) {
+        return true; // Duplicate found
+      }
+    }
+    return false; // No duplicates
+  }
+
   if (cellId === activeCell) return { backgroundColor: "#ED9F38" };
 
   if (

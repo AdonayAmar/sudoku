@@ -65,3 +65,13 @@ export default function getMatrix(): number[] {
   // flatten to a single 1D array of length 81
   return grid.flat();
 }
+
+export const unsolvedMatrix: (number | null)[] = getMatrix();
+for (let i = 0; i < 40; i++) {
+  const cell = Math.floor(Math.random() * (80 - 0 + 1) + 0);
+  if (unsolvedMatrix[cell] === null) {
+    i--;
+  } else {
+    unsolvedMatrix[cell] = null;
+  }
+}
