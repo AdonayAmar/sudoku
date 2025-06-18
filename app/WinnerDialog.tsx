@@ -3,9 +3,10 @@ import React from "react";
 
 interface Props {
   gameEnd: boolean;
+  time: string;
 }
 
-const WinnerDialog = ({ gameEnd }: Props) => {
+const WinnerDialog = ({ gameEnd, time }: Props) => {
   return (
     <Dialog.Root open={!gameEnd}>
       <Dialog.Content maxWidth="450px">
@@ -16,7 +17,7 @@ const WinnerDialog = ({ gameEnd }: Props) => {
         <Flex direction="column" gap="3">
           <label>
             <Text as="div" size="9" mb="1" weight="bold">
-              Time: 3:13
+              Time: {time}
             </Text>
           </label>
         </Flex>

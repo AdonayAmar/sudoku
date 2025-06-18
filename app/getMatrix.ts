@@ -66,11 +66,7 @@ export default function getMatrix(): number[] {
   return grid.flat();
 }
 
-export const matrix = getMatrix();
-
-export const unsolvedMatrix: (number | null)[] = getUnsolvedMatrix();
-
-function getUnsolvedMatrix(): (number | null)[] {
+export function getUnsolvedMatrix(matrix: number[]): (number | null)[] {
   const newMatrix: (number | null)[] = copyToNumberOrNullArray(matrix);
   for (let i = 0; i < 40; i++) {
     const cell = Math.floor(Math.random() * (80 - 0 + 1) + 0);

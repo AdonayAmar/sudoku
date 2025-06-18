@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 
 interface Props {
   isRunning: boolean;
+  getTime: (time: string) => void;
 }
 
-const Time = ({ isRunning }: Props) => {
+const Time = ({ isRunning, getTime }: Props) => {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
@@ -24,10 +25,13 @@ const Time = ({ isRunning }: Props) => {
     const minutes = Math.floor(milliseconds / 60000);
     const seconds = Math.floor((milliseconds % 60000) / 1000);
 
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-      2,
-      "0"
-    )}`;
+    const formated = `${String(minutes).padStart(2, "0")}:${String(
+      seconds
+    ).padStart(2, "0")}`;
+
+    getTime(formated);
+
+    return formated;
   };
 
   return <Text>Time: {formatTime(time)}</Text>;

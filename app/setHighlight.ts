@@ -1,10 +1,10 @@
 import { cellSearchIndex, colMatrix, rowMatrix } from "./getBoard";
-import { unsolvedMatrix } from "./getMatrix";
 
 export const setHighligh = (
   cellId: number,
   activeCell: number | undefined,
-  board: (number | null)[]
+  board: (number | null)[],
+  unsolvedMatrix: (number | null)[]
 ) => {
   const cellRow: number[] = rowMatrix[cellSearchIndex[cellId][0]];
   const cellCol: number[] = colMatrix[cellSearchIndex[cellId][1]];

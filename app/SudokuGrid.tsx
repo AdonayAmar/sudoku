@@ -5,10 +5,16 @@ import { setHighligh } from "./setHighlight";
 interface Props {
   board: (number | null)[];
   activeCell: number | undefined;
+  unsolvedMatrix: (number | null)[];
   setActiveCell: (cellId: number) => void;
 }
 
-const SudokuGrid = ({ board, activeCell, setActiveCell }: Props) => {
+const SudokuGrid = ({
+  board,
+  activeCell,
+  unsolvedMatrix,
+  setActiveCell,
+}: Props) => {
   const getBlock = (block: number[], blockId: number) => {
     return (
       <Grid key={blockId} columns="3" rows="3" className="border-3">
@@ -16,7 +22,7 @@ const SudokuGrid = ({ board, activeCell, setActiveCell }: Props) => {
           <Grid
             key={id}
             className="border place-items-center content-center"
-            style={setHighligh(cellId, activeCell, board)}
+            style={setHighligh(cellId, activeCell, board, unsolvedMatrix)}
             onClick={() => setActiveCell(cellId)}
           >
             {board[cellId]}
