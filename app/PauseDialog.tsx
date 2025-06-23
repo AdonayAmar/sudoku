@@ -1,6 +1,6 @@
 import { Button, Flex, Text, Dialog } from "@radix-ui/themes";
 
-import React from "react";
+import React, { useState } from "react";
 import { FaRegPauseCircle } from "react-icons/fa";
 
 interface Props {
@@ -11,10 +11,17 @@ interface Props {
 }
 
 const PauseDialog = ({ timeRunning, time, redoGame, newGame }: Props) => {
+  const [open, setOpen] = useState(false);
+  timeRunning(!open);
+
   return (
-    <Dialog.Root>
+    <Dialog.Root
+      onOpenChange={() => {
+        setOpen(!open);
+      }}
+    >
       <Dialog.Trigger>
-        <FaRegPauseCircle size={25} onClick={() => timeRunning(false)} />
+        <FaRegPauseCircle size={25} />
       </Dialog.Trigger>
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>PAUSE</Dialog.Title>
@@ -37,7 +44,7 @@ const PauseDialog = ({ timeRunning, time, redoGame, newGame }: Props) => {
               NEW GAME
             </Button>
           </Dialog.Close>
-          <Dialog.Close onClick={() => timeRunning(true)}>
+          <Dialog.Close>
             <Button variant="soft">RESUME</Button>
           </Dialog.Close>
         </Flex>
