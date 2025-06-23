@@ -1,11 +1,12 @@
 "use client";
-import { Box, Grid } from "@radix-ui/themes";
+import { Box, Flex, Grid } from "@radix-ui/themes";
 import SudokuGrid from "./SudokuGrid";
 import InputPad from "./InputPad";
 import { useEffect, useState } from "react";
 import getMatrix, { getUnsolvedMatrix } from "./getMatrix";
 import Time from "./Time";
 import WinnerDialog from "./WinnerDialog";
+import PauseDialog from "./PauseDialog";
 
 export default function Home() {
   const [matrix, setMatrix] = useState<number[]>(getMatrix());
@@ -18,6 +19,7 @@ export default function Home() {
   const [isRunning, setIsRunning] = useState(true);
   const [formatedTime, setFormatedTime] = useState("0:00");
   const [timeReset, setTimeReset] = useState(false);
+  const [winner, setWinner] = useState(false);
 
   const getNewMatrix = () => {
     const newMatrix = getMatrix();
@@ -45,19 +47,30 @@ export default function Home() {
       JSON.stringify(board) === JSON.stringify(matrix)
     ) {
       setIsRunning(false);
+      setWinner(true);
     }
   }, [board, matrix]);
 
   return (
     <Grid className="place-items-center p-10">
-      <Time
-        isRunning={isRunning}
-        getTime={(time) => setFormatedTime(time)}
-        reset={timeReset}
-        setReset={(rest) => setTimeReset(rest)}
-      />
+      <Flex>
+        <Time
+          isRunning={isRunning}
+          getTime={(time) => setFormatedTime(time)}
+          reset={timeReset}
+          setReset={(rest) => setTimeReset(rest)}
+        />
+        <Box className="pl-100">
+          <PauseDialog
+            timeRunning={(running) => setIsRunning(running)}
+            time={formatedTime}
+            redoGame={() => resetBoard()}
+            newGame={() => getNewMatrix()}
+          />
+        </Box>
+      </Flex>
       <WinnerDialog
-        gameRunning={isRunning}
+        winner={winner}
         time={formatedTime}
         redoGame={() => resetBoard()}
         newGame={() => getNewMatrix()}

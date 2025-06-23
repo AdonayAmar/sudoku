@@ -1,18 +1,23 @@
 import { Button, Flex, Text, Dialog } from "@radix-ui/themes";
+
 import React from "react";
+import { FaRegPauseCircle } from "react-icons/fa";
 
 interface Props {
-  winner: boolean;
+  timeRunning: (running: boolean) => void;
   time: string;
   redoGame: () => void;
   newGame: () => void;
 }
 
-const WinnerDialog = ({ winner, time, redoGame, newGame }: Props) => {
+const PauseDialog = ({ timeRunning, time, redoGame, newGame }: Props) => {
   return (
-    <Dialog.Root open={winner}>
+    <Dialog.Root>
+      <Dialog.Trigger>
+        <FaRegPauseCircle size={25} onClick={() => timeRunning(false)} />
+      </Dialog.Trigger>
       <Dialog.Content maxWidth="450px">
-        <Dialog.Title>WINNER</Dialog.Title>
+        <Dialog.Title>PAUSE</Dialog.Title>
 
         <Flex direction="column" gap="3">
           <label>
@@ -21,7 +26,6 @@ const WinnerDialog = ({ winner, time, redoGame, newGame }: Props) => {
             </Text>
           </label>
         </Flex>
-
         <Flex gap="3" mt="4" mb="3" justify="between">
           <Dialog.Close>
             <Button variant="soft" onClick={redoGame}>
@@ -33,10 +37,13 @@ const WinnerDialog = ({ winner, time, redoGame, newGame }: Props) => {
               NEW GAME
             </Button>
           </Dialog.Close>
+          <Dialog.Close onClick={() => timeRunning(true)}>
+            <Button variant="soft">RESUME</Button>
+          </Dialog.Close>
         </Flex>
       </Dialog.Content>
     </Dialog.Root>
   );
 };
 
-export default WinnerDialog;
+export default PauseDialog;

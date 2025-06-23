@@ -15,8 +15,8 @@ const Time = ({ isRunning, getTime, reset, setReset }: Props) => {
     let interval: NodeJS.Timeout;
     if (isRunning) {
       interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 10);
-      }, 10);
+        setTime((prevTime) => prevTime + 100);
+      }, 100);
     }
     return () => {
       clearInterval(interval);
@@ -39,7 +39,7 @@ const Time = ({ isRunning, getTime, reset, setReset }: Props) => {
     return formated;
   };
 
-  return <Text>Time: {formatTime(time)}</Text>;
+  return <Text size="6">Time: {formatTime(time)}</Text>;
 };
 
 export default Time;
