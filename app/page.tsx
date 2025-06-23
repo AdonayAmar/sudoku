@@ -2,7 +2,7 @@
 import { Box, Flex, Grid } from "@radix-ui/themes";
 import SudokuGrid from "./SudokuGrid";
 import InputPad from "./InputPad";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import getMatrix, { getUnsolvedMatrix } from "./getMatrix";
 import Time from "./Time";
 import WinnerDialog from "./WinnerDialog";
@@ -54,6 +54,44 @@ export default function Home() {
       setIsRunning(false);
     }
   }, [board, matrix]);
+
+  const handleArrowKeydownn = useCallback(
+    (event: KeyboardEvent) => {
+      const rowLeftEdge = [0, 9, 18, 27, 36, 45, 54, 63, 72];
+      const rowRightEdge = [8, 17, 26, 35, 44, 53, 62, 71, 80];
+
+      console.log("Global key pressed:", event.key);
+      if (activeCell || activeCell === 0) {
+        switch (event.key) {
+          case "ArrowUp":
+            if (activeCell - 9 >= 0) setActiveCell(activeCell - 9);
+            break;
+          case "ArrowDown":
+            if (activeCell + 9 <= 80) setActiveCell(activeCell + 9);
+            break;
+          case "ArrowLeft":
+            if (activeCell - 1 >= 0 && !rowRightEdge.includes(activeCell - 1))
+              setActiveCell(activeCell - 1);
+            break;
+          case "ArrowRight":
+            if (activeCell + 1 <= 80 && !rowLeftEdge.includes(activeCell + 1))
+              setActiveCell(activeCell + 1);
+            break;
+        }
+      }
+      console.log(activeCell);
+    },
+    [activeCell]
+  ); // Empty dependency array ensures the callback is stable
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleArrowKeydownn);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleArrowKeydownn);
+    };
+  }, [handleArrowKeydownn]); // Dependency array ensures effect re-runs if callback changes
 
   return (
     <Grid className="place-items-center">
