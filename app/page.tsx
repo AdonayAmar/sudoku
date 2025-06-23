@@ -56,30 +56,23 @@ export default function Home() {
   }, [board, matrix]);
 
   return (
-    <Grid className="place-items-center p-10">
-      <Flex>
-        <Time
-          isRunning={isRunning}
-          getTime={(time) => setFormatedTime(time)}
-          reset={timeReset}
-          setReset={(rest) => setTimeReset(rest)}
-        />
-        <Box className="pl-100">
+    <Grid className="place-items-center">
+      <Box className="space-y-3">
+        <Flex className="pt-3 " justify="between">
+          <Time
+            isRunning={isRunning}
+            getTime={(time) => setFormatedTime(time)}
+            reset={timeReset}
+            setReset={(rest) => setTimeReset(rest)}
+          />
           <PauseDialog
             timeRunning={(running) => (!winner ? setIsRunning(running) : null)}
             time={formatedTime}
             redoGame={() => resetBoard()}
             newGame={() => getNewMatrix()}
           />
-        </Box>
-      </Flex>
-      <WinnerDialog
-        winner={winner}
-        time={formatedTime}
-        redoGame={() => resetBoard()}
-        newGame={() => getNewMatrix()}
-      />
-      <Box className="alig">
+        </Flex>
+
         <SudokuGrid
           board={board}
           activeCell={activeCell}
@@ -88,17 +81,22 @@ export default function Home() {
             setActiveCell(cellId);
           }}
         />
-        <Box className="p-3">
-          <InputPad
-            activeCell={activeCell}
-            board={board}
-            setBoard={(board) => {
-              setBoard(board);
-            }}
-            unsolvedMatrix={unsolvedMatrix}
-          />
-        </Box>
+
+        <InputPad
+          activeCell={activeCell}
+          board={board}
+          setBoard={(board) => {
+            setBoard(board);
+          }}
+          unsolvedMatrix={unsolvedMatrix}
+        />
       </Box>
+      <WinnerDialog
+        winner={winner}
+        time={formatedTime}
+        redoGame={() => resetBoard()}
+        newGame={() => getNewMatrix()}
+      />
     </Grid>
   );
 }

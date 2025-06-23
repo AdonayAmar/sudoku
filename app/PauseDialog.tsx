@@ -1,7 +1,6 @@
-import { Button, Flex, Text, Dialog } from "@radix-ui/themes";
-
 import React, { useState } from "react";
-import { FaRegPauseCircle } from "react-icons/fa";
+import { Button, Flex, Text, Dialog } from "@radix-ui/themes";
+import { FaPauseCircle, FaRegPauseCircle } from "react-icons/fa";
 
 interface Props {
   timeRunning: (running: boolean) => void;
@@ -13,6 +12,7 @@ interface Props {
 const PauseDialog = ({ timeRunning, time, redoGame, newGame }: Props) => {
   const [open, setOpen] = useState(false);
   timeRunning(!open);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <Dialog.Root
@@ -20,8 +20,15 @@ const PauseDialog = ({ timeRunning, time, redoGame, newGame }: Props) => {
         setOpen(!open);
       }}
     >
-      <Dialog.Trigger>
-        <FaRegPauseCircle size={25} />
+      <Dialog.Trigger
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {isHovered ? (
+          <FaRegPauseCircle size={40} />
+        ) : (
+          <FaPauseCircle size={40} />
+        )}
       </Dialog.Trigger>
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>PAUSED</Dialog.Title>

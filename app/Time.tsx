@@ -39,7 +39,7 @@ const Time = ({ isRunning, getTime, reset, setReset }: Props) => {
     return formated;
   };
 
-  return <Text size="6">Time: {formatTime(time)}</Text>;
+  return <Text size="8">Time: {formatTime(time)}</Text>;
 };
 
 export default Time;
