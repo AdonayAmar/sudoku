@@ -66,7 +66,7 @@ const KeyPad = ({ activeCell, board, setBoard, unsolvedMatrix }: Props) => {
           key={id ? id : "X"}
           size="3"
           color="gray"
-          disabled={id ? disableCheck(id) : false}
+          variant={id && disableCheck(id) ? "soft" : "solid"}
           onClick={() => {
             setBoard([...board]);
             inputHandler(id);
