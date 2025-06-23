@@ -24,7 +24,7 @@ const PauseDialog = ({ timeRunning, time, redoGame, newGame }: Props) => {
         <FaRegPauseCircle size={25} />
       </Dialog.Trigger>
       <Dialog.Content maxWidth="450px">
-        <Dialog.Title>PAUSE</Dialog.Title>
+        <Dialog.Title>PAUSED</Dialog.Title>
 
         <Flex direction="column" gap="3">
           <label>

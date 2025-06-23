@@ -30,6 +30,7 @@ export default function Home() {
 
     setBoard(newUnsolvedMatrix);
 
+    setWinner(false);
     setIsRunning(true);
     setTimeReset(true);
   };
@@ -37,6 +38,7 @@ export default function Home() {
   const resetBoard = () => {
     setBoard(unsolvedMatrix);
 
+    setWinner(false);
     setIsRunning(true);
     setTimeReset(true);
   };
@@ -46,8 +48,8 @@ export default function Home() {
       !board.includes(null) &&
       JSON.stringify(board) === JSON.stringify(matrix)
     ) {
-      setIsRunning(false);
       setWinner(true);
+      setIsRunning(false);
     }
   }, [board, matrix]);
 
@@ -62,7 +64,7 @@ export default function Home() {
         />
         <Box className="pl-100">
           <PauseDialog
-            timeRunning={(running) => setIsRunning(running)}
+            timeRunning={(running) => (!winner ? setIsRunning(running) : null)}
             time={formatedTime}
             redoGame={() => resetBoard()}
             newGame={() => getNewMatrix()}
