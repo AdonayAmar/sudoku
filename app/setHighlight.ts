@@ -1,4 +1,9 @@
-import { cellSearchIndex, colMatrix, rowMatrix } from "./getBoard";
+import {
+  blockMatrix,
+  cellSearchIndex,
+  colMatrix,
+  rowMatrix,
+} from "./matrixMap";
 
 export const setHighligh = (
   cellId: number,
@@ -8,9 +13,11 @@ export const setHighligh = (
 ) => {
   const cellRow: number[] = rowMatrix[cellSearchIndex[cellId][0]];
   const cellCol: number[] = colMatrix[cellSearchIndex[cellId][1]];
+  const cellBlock: number[] = blockMatrix[cellSearchIndex[cellId][2]];
 
   if (hasDuplicates(cellRow)) return { backgroundColor: "#e94616" };
   if (hasDuplicates(cellCol)) return { backgroundColor: "#e94616" };
+  if (hasDuplicates(cellBlock)) return { backgroundColor: "#e94616" };
 
   function hasDuplicates(arr: number[]) {
     const seen = arr.filter((e) => e !== cellId);

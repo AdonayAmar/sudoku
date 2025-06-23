@@ -2,13 +2,15 @@ import { Button, Flex, Text, Dialog } from "@radix-ui/themes";
 import React from "react";
 
 interface Props {
-  gameEnd: boolean;
+  gameRunning: boolean;
   time: string;
+  redoGame: () => void;
+  newGame: () => void;
 }
 
-const WinnerDialog = ({ gameEnd, time }: Props) => {
+const WinnerDialog = ({ gameRunning, time, redoGame, newGame }: Props) => {
   return (
-    <Dialog.Root open={!gameEnd}>
+    <Dialog.Root open={!gameRunning}>
       <Dialog.Content maxWidth="450px">
         <Dialog.Title>WINNER</Dialog.Title>
         <Dialog.Description size="2" mb="4">
@@ -24,10 +26,14 @@ const WinnerDialog = ({ gameEnd, time }: Props) => {
 
         <Flex gap="3" mt="4" mb="3" justify="between">
           <Dialog.Close>
-            <Button variant="soft">REDO</Button>
+            <Button variant="soft" onClick={redoGame}>
+              REDO
+            </Button>
           </Dialog.Close>
           <Dialog.Close>
-            <Button variant="soft">NEW GAME</Button>
+            <Button variant="soft" onClick={newGame}>
+              NEW GAME
+            </Button>
           </Dialog.Close>
         </Flex>
       </Dialog.Content>

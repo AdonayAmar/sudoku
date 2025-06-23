@@ -1,5 +1,5 @@
 import { Grid } from "@radix-ui/themes";
-import { blockMatrix } from "./getBoard";
+import { blockMatrix } from "./matrixMap";
 import { setHighligh } from "./setHighlight";
 
 interface Props {

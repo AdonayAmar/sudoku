@@ -4,14 +4,16 @@ import React, { useEffect, useState } from "react";
 interface Props {
   isRunning: boolean;
   getTime: (time: string) => void;
+  reset: boolean;
+  setReset: (reset: boolean) => void;
 }
 
-const Time = ({ isRunning, getTime }: Props) => {
+const Time = ({ isRunning, getTime, reset, setReset }: Props) => {
   const [time, setTime] = useState(0);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (isRunning!) {
+    if (isRunning) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 10);
       }, 10);
@@ -20,6 +22,9 @@ const Time = ({ isRunning, getTime }: Props) => {
       clearInterval(interval);
     };
   }, [isRunning]);
+
+  if (reset) setTime(0);
+  setReset(false);
 
   const formatTime = (milliseconds: number) => {
     const minutes = Math.floor(milliseconds / 60000);

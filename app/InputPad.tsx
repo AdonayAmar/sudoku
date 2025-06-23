@@ -13,9 +13,14 @@ const btnMap = [1, 2, 3, 4, 5, 6, 7, 8, 9, null];
 
 const KeyPad = ({ activeCell, board, setBoard, unsolvedMatrix }: Props) => {
   const inputHandler = (id: number | null) => {
-    if ((activeCell || activeCell === 0) && unsolvedMatrix[activeCell] === null)
-      board[activeCell] = id;
-    setBoard([...board]);
+    if (
+      (activeCell || activeCell === 0) &&
+      unsolvedMatrix[activeCell] === null
+    ) {
+      const newBoard = [...board];
+      newBoard[activeCell] = id;
+      setBoard([...newBoard]);
+    }
   };
 
   return (
@@ -25,7 +30,10 @@ const KeyPad = ({ activeCell, board, setBoard, unsolvedMatrix }: Props) => {
           key={id ? id : "X"}
           size="3"
           color="gray"
-          onClick={() => inputHandler(id)}
+          onClick={() => {
+            setBoard([...board]);
+            inputHandler(id);
+          }}
         >
           {id ? id : "X"}
         </Button>
