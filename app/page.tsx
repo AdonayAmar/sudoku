@@ -31,6 +31,7 @@ export default function Home() {
     setBoard(newUnsolvedMatrix);
 
     setWinner(false);
+    setActiveCell(undefined);
     setIsRunning(true);
     setTimeReset(true);
   };
@@ -39,6 +40,7 @@ export default function Home() {
     setBoard(unsolvedMatrix);
 
     setWinner(false);
+    setActiveCell(undefined);
     setIsRunning(true);
     setTimeReset(true);
   };
