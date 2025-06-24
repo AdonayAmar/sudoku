@@ -21,6 +21,7 @@ export default function Home() {
   const [timeReset, setTimeReset] = useState(false);
   const [winner, setWinner] = useState(false);
   const [undoMemory, setUndoMemory] = useState<(number | null)[][]>([board]);
+  const [redoMemory, setRedoMemory] = useState<(number | null)[][]>([board]);
 
   const getNewMatrix = () => {
     const newMatrix = getMatrix();
@@ -92,12 +93,33 @@ export default function Home() {
 
   const handleUndo = () => {
     if (undoMemory.length - 2 >= 0) {
-      const undoMatrix = undoMemory[undoMemory.length - 2];
-      const tempMemory = [...undoMemory];
-      tempMemory.pop();
-      setBoard(undoMatrix);
-      setUndoMemory(tempMemory);
-      console.log(undoMatrix);
+      const undoToBoard = undoMemory[undoMemory.length - 2];
+
+      const redoMatrix = [...redoMemory];
+      const undoMatrix = [...undoMemory];
+
+      redoMatrix.push(undoMemory[undoMemory.length - 1]);
+      undoMatrix.pop();
+
+      setBoard(undoToBoard);
+      setUndoMemory(undoMatrix);
+      setRedoMemory(redoMatrix);
+    }
+  };
+
+  const handleRedo = () => {
+    if (redoMemory.length - 1 >= 1) {
+      const redoToBoard = redoMemory[redoMemory.length - 1];
+
+      const undoMatrix = [...undoMemory];
+      const redoMatrix = [...redoMemory];
+
+      undoMatrix.push(redoToBoard);
+      redoMatrix.pop();
+
+      setBoard(redoToBoard);
+      setUndoMemory(undoMatrix);
+      setRedoMemory(redoMatrix);
     }
   };
 
@@ -112,6 +134,7 @@ export default function Home() {
             setReset={(rest) => setTimeReset(rest)}
           />
           <Button onClick={() => handleUndo()}>Undo</Button>
+          <Button onClick={() => handleRedo()}>Redo</Button>
           <PauseDialog
             timeRunning={(running) => (!winner ? setIsRunning(running) : null)}
             time={formatedTime}
@@ -137,6 +160,7 @@ export default function Home() {
             const tempMemory = [...undoMemory];
             tempMemory.push(newBoard);
             setUndoMemory(tempMemory);
+            setRedoMemory([[...newBoard]]);
           }}
           unsolvedMatrix={unsolvedMatrix}
         />
