@@ -1,5 +1,5 @@
 "use client";
-import { Box, Flex, Grid } from "@radix-ui/themes";
+import { Box, Button, Flex, Grid } from "@radix-ui/themes";
 import SudokuGrid from "./SudokuGrid";
 import InputPad from "./InputPad";
 import { useCallback, useEffect, useState } from "react";
@@ -20,6 +20,7 @@ export default function Home() {
   const [formatedTime, setFormatedTime] = useState("0:00");
   const [timeReset, setTimeReset] = useState(false);
   const [winner, setWinner] = useState(false);
+  const [undoMemory, setUndoMemory] = useState<(number | null)[][]>([board]);
 
   const getNewMatrix = () => {
     const newMatrix = getMatrix();
@@ -59,8 +60,6 @@ export default function Home() {
     (event: KeyboardEvent) => {
       const rowLeftEdge = [0, 9, 18, 27, 36, 45, 54, 63, 72];
       const rowRightEdge = [8, 17, 26, 35, 44, 53, 62, 71, 80];
-
-      console.log("Global key pressed:", event.key);
       if (activeCell || activeCell === 0) {
         switch (event.key) {
           case "ArrowUp":
@@ -86,12 +85,21 @@ export default function Home() {
 
   useEffect(() => {
     window.addEventListener("keydown", handleArrowKeydownn);
-
-    // Cleanup function to remove the event listener when the component unmounts
     return () => {
       window.removeEventListener("keydown", handleArrowKeydownn);
     };
   }, [handleArrowKeydownn]); // Dependency array ensures effect re-runs if callback changes
+
+  const handleUndo = () => {
+    if (undoMemory.length - 2 >= 0) {
+      const undoMatrix = undoMemory[undoMemory.length - 2];
+      const tempMemory = [...undoMemory];
+      tempMemory.pop();
+      setBoard(undoMatrix);
+      setUndoMemory(tempMemory);
+      console.log(undoMatrix);
+    }
+  };
 
   return (
     <Grid className="place-items-center">
@@ -103,6 +111,7 @@ export default function Home() {
             reset={timeReset}
             setReset={(rest) => setTimeReset(rest)}
           />
+          <Button onClick={() => handleUndo()}>Undo</Button>
           <PauseDialog
             timeRunning={(running) => (!winner ? setIsRunning(running) : null)}
             time={formatedTime}
@@ -123,8 +132,11 @@ export default function Home() {
         <InputPad
           activeCell={activeCell}
           board={board}
-          setBoard={(board) => {
-            setBoard(board);
+          setBoard={(newBoard) => {
+            setBoard(newBoard);
+            const tempMemory = [...undoMemory];
+            tempMemory.push(newBoard);
+            setUndoMemory(tempMemory);
           }}
           unsolvedMatrix={unsolvedMatrix}
         />
