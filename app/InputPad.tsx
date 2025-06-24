@@ -14,17 +14,11 @@ const btnMap = [1, 2, 3, 4, 5, 6, 7, 8, 9, null];
 const KeyPad = ({ activeCell, board, setBoard, unsolvedMatrix }: Props) => {
   const inputHandler = useCallback(
     (id: number | null) => {
-      console.log(id);
-      if (
-        (activeCell || activeCell === 0) &&
-        unsolvedMatrix[activeCell] === null
-      ) {
-        const newBoard = [...board];
-        newBoard[activeCell] = id;
-        setBoard([...newBoard]);
-      }
+      const newBoard = [...board];
+      newBoard[activeCell!] = id;
+      setBoard([...newBoard]);
     },
-    [activeCell, board, setBoard, unsolvedMatrix]
+    [activeCell, board, setBoard]
   );
 
   const disableCheck = (id: number) => {
@@ -43,11 +37,16 @@ const KeyPad = ({ activeCell, board, setBoard, unsolvedMatrix }: Props) => {
           : parseInt(event.key);
       if (btnMap.includes(key)) {
         console.log(key);
-        setBoard([...board]);
-        inputHandler(key);
+        if (
+          (activeCell || activeCell === 0) &&
+          unsolvedMatrix[activeCell] === null
+        ) {
+          setBoard([...board]);
+          inputHandler(key);
+        }
       }
     },
-    [board, inputHandler, setBoard]
+    [board, inputHandler, setBoard, unsolvedMatrix, activeCell]
   ); // Empty dependency array ensures the callback is stable
 
   useEffect(() => {

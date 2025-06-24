@@ -36,6 +36,8 @@ export default function Home() {
     setActiveCell(undefined);
     setIsRunning(true);
     setTimeReset(true);
+    setUndoMemory([newUnsolvedMatrix]);
+    setRedoMemory([newUnsolvedMatrix]);
   };
 
   const resetBoard = () => {
@@ -45,6 +47,8 @@ export default function Home() {
     setActiveCell(undefined);
     setIsRunning(true);
     setTimeReset(true);
+    setUndoMemory([unsolvedMatrix]);
+    setRedoMemory([unsolvedMatrix]);
   };
 
   useEffect(() => {
