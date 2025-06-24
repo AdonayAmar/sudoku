@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Flex, Grid } from "@radix-ui/themes";
+import { Box, Flex, Grid } from "@radix-ui/themes";
 import SudokuGrid from "./SudokuGrid";
 import InputPad from "./InputPad";
 import { useCallback, useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import getMatrix, { getUnsolvedMatrix } from "./getMatrix";
 import Time from "./Time";
 import WinnerDialog from "./WinnerDialog";
 import PauseDialog from "./PauseDialog";
+import { GrRedo, GrUndo } from "react-icons/gr";
 
 export default function Home() {
   const [matrix, setMatrix] = useState<number[]>(getMatrix());
@@ -130,22 +131,29 @@ export default function Home() {
   return (
     <Grid className="place-items-center">
       <Box className="space-y-3">
-        <Flex className="pt-3 " justify="between">
+        <Grid className="pt-3" columns="3">
           <Time
             isRunning={isRunning}
             getTime={(time) => setFormatedTime(time)}
             reset={timeReset}
             setReset={(rest) => setTimeReset(rest)}
           />
-          <Button onClick={() => handleUndo()}>Undo</Button>
-          <Button onClick={() => handleRedo()}>Redo</Button>
-          <PauseDialog
-            timeRunning={(running) => (!winner ? setIsRunning(running) : null)}
-            time={formatedTime}
-            redoGame={() => resetBoard()}
-            newGame={() => getNewMatrix()}
-          />
-        </Flex>
+
+          <Flex className="col-span-2 pl-15 pr-5" justify="between">
+            <Flex className="space-x-30" justify="center">
+              <GrUndo size={40} onClick={() => handleUndo()} />
+              <GrRedo size={40} onClick={() => handleRedo()} />
+            </Flex>
+            <PauseDialog
+              timeRunning={(running) =>
+                !winner ? setIsRunning(running) : null
+              }
+              time={formatedTime}
+              redoGame={() => resetBoard()}
+              newGame={() => getNewMatrix()}
+            />
+          </Flex>
+        </Grid>
 
         <SudokuGrid
           board={board}

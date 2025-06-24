@@ -43,7 +43,7 @@ const PauseDialog = ({ timeRunning, time, redoGame, newGame }: Props) => {
         <Flex gap="3" mt="4" mb="3" justify="between">
           <Dialog.Close>
             <Button variant="soft" onClick={redoGame}>
-              REDO
+              RETRY
             </Button>
           </Dialog.Close>
           <Dialog.Close>
